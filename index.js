@@ -5,7 +5,11 @@ var https = require('https');
 var http = require('http');
 var app = express();
 
-var port = 80;
+var port = 8000;
+var subdomains = [
+	"www",
+	"chat"
+]
 
 process.on('uncaughtException', UncaughtExceptionHandler);
 
@@ -22,8 +26,6 @@ console.log('Port: ' + port);
 function template(req, res) { res.sendFile(__dirname + "/resources/pages/template.html"); }
 
 function redirect(req, res, next) {
-	console.log('test');
-	console.log(req.headers.host.slice(0, 4));
     if (req.headers.host.slice(0, 4) !== 'www.') {
         var newHost = "www." + req.headers.host;
         return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
@@ -32,7 +34,7 @@ function redirect(req, res, next) {
 };
 
 app.set('trust proxy', true);
-app.all(redirect);
+app.use(redirect);
 
 app.use(compression());
 app.use('/resources', serveStatic(__dirname + '/resources'));
