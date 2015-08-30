@@ -5,7 +5,7 @@ var https = require('https');
 var http = require('http');
 var app = express();
 
-var port = 8000;
+var port = 80;
 var subdomains = [
 	"www",
 	"chat"
