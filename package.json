@@ -1,0 +1,28 @@
+{
+  "name": "aceeri",
+  "version": "1.0.0",
+  "description": "Personal Website",
+  "main": "index.js",
+  "dependencies": {
+    "compression": "^1.5.2",
+    "express": "^4.13.3",
+    "serve-static": "^1.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aceeri/aceeri.com.git"
+  },
+  "keywords": [
+    "Aceeri"
+  ],
+  "author": "Connor McCluskey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aceeri/aceeri.com/issues"
+  },
+  "homepage": "https://github.com/Aceeri/aceeri.com#readme"
+}
