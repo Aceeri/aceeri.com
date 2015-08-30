@@ -21,6 +21,19 @@ console.log('Port: ' + port);
 
 function template(req, res) { res.sendFile(__dirname + "/resources/pages/template.html"); }
 
+function redirect(req, res, next) {
+	console.log('test');
+	console.log(req.headers.host.slice(0, 4));
+    if (req.headers.host.slice(0, 4) !== 'www.') {
+        var newHost = "www." + req.headers.host;
+        return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
+    }
+    next();
+};
+
+app.set('trust proxy', true);
+app.all(redirect);
+
 app.use(compression());
 app.use('/resources', serveStatic(__dirname + '/resources'));
 app.use(serveStatic(__dirname + '/misc', {'index': ['/pages/template.html', '/pages/template.htm']}));
