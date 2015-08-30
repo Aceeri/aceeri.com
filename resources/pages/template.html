@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,900' rel='stylesheet' type='text/css'>
+		<link rel="icon" type="image/gif" href="/resources/img/icon.png" />
 		<meta charset="utf-8">
 		<title>Aceeri was here</title>
 		<link rel="stylesheet" href="resources/css/default.css">
@@ -25,10 +26,11 @@
 					console.log("clicked");
 					e.preventDefault();
 					var src = $(this).attr('href');
-					$('#content').fadeOut(100,function(){
+					$('#content').attr('src', src);
+					/*$('#content').fadeOut(50,function(){
 						$('#content').attr('src', src);
-						$('#content').fadeIn(150);
-					});
+						$('#content').fadeIn(100);
+					});*/
 				});
 
 		    	var fade = document.getElementsByClassName("fade");
