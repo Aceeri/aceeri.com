@@ -5,6 +5,8 @@ var https = require('https');
 var http = require('http');
 var app = express();
 
+var port = 8000;
+
 process.on('uncaughtException', UncaughtExceptionHandler);
 
 function UncaughtExceptionHandler(err) {
@@ -15,14 +17,13 @@ function UncaughtExceptionHandler(err) {
 }
 
 console.log('Project Directory: ' + __dirname);
+console.log('Port: ' + port);
+
+function template(req, res) { res.sendFile(__dirname + "/resources/pages/template.html"); }
 
 app.use(compression());
-app.use(serveStatic(__dirname + '/resources', {'index': ['/pages/template.html', '/pages/template.htm']}));
-app.use('/t/', function(req, res) {
-	
-});
-
+app.use('/resources', serveStatic(__dirname + '/resources'));
 app.use(serveStatic(__dirname + '/misc', {'index': ['/pages/template.html', '/pages/template.htm']}));
+app.get('/', template);
 
-// start listening on port 8000
-app.listen(80);
+app.listen(port);

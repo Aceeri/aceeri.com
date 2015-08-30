@@ -3,11 +3,14 @@
 	margin: 0px;
 }
 
+iframe {
+	border: 0px;
+}
+
 #content {
-	position: absolute;
-	background:#FFFFFF;
+	background: #FFFFFF;
 	width: calc(100% - 20px);
-	height: calc(100% - 20px);
+	height: 100%;
 	margin: 10px;
 }
 
