@@ -6,11 +6,12 @@ var http = require('http');
 var fs = require('fs');
 var app = express();
 
-var port = 80;
+var port = 8000;
 var subdomains = [
 	"www",
 	"chat"
 ]
+var domain = (port == 8000) ? "localhost:8000" : "aceeri.com";
 
 process.on('uncaughtException', UncaughtExceptionHandler);
 
@@ -27,7 +28,7 @@ console.log('Port: ' + port);
 function template(req, res) { res.sendFile(__dirname + "/resources/pages/template.html"); }
 
 function get_valid_domain(url) {
-    var pattern = new RegExp(/(.*.?)aceeri.com/);
+    var pattern = new RegExp('(.*.?)' + domain);
     var match = url.match(pattern);
     
     for (var i = 0; i < subdomains.length; i++) {
@@ -42,9 +43,8 @@ function get_valid_domain(url) {
 }
 
 function redirect(req, res, next) {
-	var valid_domain = get_valid_domain(req.headers.host);
 	if (valid_domain != req.headers.host) {
-		return res.redirect(301, req.protocol + '://' + valid_domain);
+		return res.redirect(301, req.protocol + '://' + valid_domain + req.originalUrl);
 	}
     next();
 };
