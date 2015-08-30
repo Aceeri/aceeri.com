@@ -22,5 +22,7 @@ app.use('/t/', function(req, res) {
 	
 });
 
+app.use(serveStatic(__dirname + '/misc', {'index': ['/pages/template.html', '/pages/template.htm']}));
+
 // start listening on port 8000
 app.listen(8000);
