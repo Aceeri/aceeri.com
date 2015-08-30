@@ -3,6 +3,7 @@ var compression = require('compression');
 var serveStatic = require('serve-static');
 var https = require('https');
 var http = require('http');
+var fs = require('fs');
 var app = express();
 
 var port = 80;
@@ -25,11 +26,26 @@ console.log('Port: ' + port);
 
 function template(req, res) { res.sendFile(__dirname + "/resources/pages/template.html"); }
 
-function redirect(req, res, next) {
-    if (req.headers.host.slice(0, 4) !== 'www.') {
-        var newHost = "www." + req.headers.host;
-        return res.redirect(301, req.protocol + '://' + newHost + req.originalUrl);
+function get_valid_domain(url) {
+    var pattern = new RegExp(/(.*.?)aceeri.com/);
+    var match = url.match(pattern);
+    
+    for (var i = 0; i < subdomains.length; i++) {
+        if (match[1].slice(0, match[1].length - 1) == subdomains[i]) {
+            // valid subdomain
+            return url;
+        }
     }
+    
+    // not a valid subdomain
+    return "www." + url.slice(match[1].length);
+}
+
+function redirect(req, res, next) {
+	var valid_domain = get_valid_domain(req.headers.host);
+	if (valid_domain != req.headers.host) {
+		return res.redirect(301, req.protocol + '://' + valid_domain);
+	}
     next();
 };
 
