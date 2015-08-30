@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,900' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="/css/default.css">
+		<meta charset="utf-8">
+		<title>Aceeri was here</title>
+
+		<script src="jquery.js"></script> 
+		<script>
+			$(function(){
+		    	$("#page-content").load("pages/index.html"); 
+		    	var buttons = [ "Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum" ];
+		    	var links = [ '/index.html', '/portfolio.html', '/blog.html', '/contact.html' ];
+
+		    	var inner = "";
+		    	var button_width = 200;
+		    	for (var i = 0; i < buttons.length; i++) {
+		    		var inner_button = (i > 0) ? " navigation-inner-button" : "";
+		    		inner += "<a style=\"width: " + button_width + "px; right: calc(50% + " + (buttons.length/2 - i - 1)*button_width + "px);\" class=\"navigation-button" + inner_button + "\" href=\"" + links[i] + "\">" + buttons[i] + "</a>";
+		    	}
+
+		    	document.getElementById("navigation").innerHTML = inner;
+
+		    	var fade = document.getElementsByClassName("fade");
+		    	
+		    	console.log(fade);
+		    	for (var i = 0; i < fade.length; i++) {
+		    		var images = $(fade).find("img");
+
+		    		$(images[1]).fadeTo(0, .01);
+		    		$(images[1]).on({
+						mouseenter: function() {
+							console.log("Mouse entered");
+							$(images[1]).fadeTo(200, 1.0);
+						},
+
+						mouseleave: function() {
+							console.log("Mouse left");
+							$(images[1]).fadeTo(200, .01);
+						}
+					});
+		    	}
+
+		    	/*var bottom_fade = document.getElementsByName("bottom-fade");
+		    	var top_fade = document.getElementsByName("top-fade");
+		    	
+		    	for (var i = 0; i < bottom_fade.length && i < top_fade.length; i++) {
+		    		var bottom = bottom_fade[i];
+		    		var top = top_fade[i];
+
+		    		console.log(bottom);
+		    		console.log(top);
+
+		    		$(top).on({
+						mouseenter: function() {
+							console.log("Mouse entered");
+							$(top).fadeTo(200, 1.0);
+						},
+
+						mouseleave: function() {
+							console.log("Mouse left");
+							$(top).fadeTo(200, .01);
+						}
+					});
+		    	}*/
+		    });
+	    </script>
+	</head>
+	<body>
+		<div class="topbar">
+			<a style="position: absolute; margin: 10px;" href="https://github.com/Aceeri">
+				<div style="position: absolute; height: 30px; width: 30px" class="fade">
+					<img style="position: absolute;" height="30" width="30" src="img/github-icon.png" title="Github" alt="Github" />
+					<img style="position: absolute;" height="30" width="30" src="img/github-icon-hover.png" title="Github" alt="Github" />
+				</div>
+			</a>
+			<h1 class="toptitle">Lorem Ipsum</h1>
+		</div>
+
+		<div id="navigation"></div>
+
+		<div id="content">
+			<div style="background: inherit;" id="page-content"></div>
+		</div>
+	</body>
+</html>
