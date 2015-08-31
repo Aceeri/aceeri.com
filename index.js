@@ -6,7 +6,7 @@ var http = require('http');
 var fs = require('fs');
 var app = express();
 
-var port = 80;
+var port = 8000;
 var subdomains = [
 	"www",
 	"chat"
@@ -43,6 +43,7 @@ function get_valid_domain(url) {
 }
 
 function redirect(req, res, next) {
+	var valid_domain = get_valid_domain(req.headers.host);
 	if (valid_domain != req.headers.host) {
 		return res.redirect(301, req.protocol + '://' + valid_domain + req.originalUrl);
 	}
