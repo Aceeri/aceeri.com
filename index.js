@@ -51,7 +51,7 @@ function redirect(req, res, next) {
 };
 
 //app.set('trust proxy', true);
-app.use(redirect);
+//app.use(redirect);
 
 app.use(compression());
 app.use('/resources', serveStatic(__dirname + '/resources'));
