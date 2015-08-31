@@ -50,7 +50,7 @@ function redirect(req, res, next) {
     next();
 };
 
-app.set('trust proxy', true);
+//app.set('trust proxy', true);
 app.use(redirect);
 
 app.use(compression());
