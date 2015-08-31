@@ -6,7 +6,7 @@ var http = require('http');
 var fs = require('fs');
 var app = express();
 
-var port = 8000;
+var port = 80;
 var subdomains = [
 	"www",
 	"chat"
