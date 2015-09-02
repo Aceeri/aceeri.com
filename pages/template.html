@@ -9,12 +9,12 @@
 		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script> 
 		<script>
 			var buttons = [ "Home", "Portfolio", "Blog", "Contact" ];
-		    var links = [ '/resources/pages/index.html', '/resources/pages/portfolio.html', '/resources/pages/blog.html', '/resources/pages/contact.html' ];
+		    var links = [ '/index', '/portfolio', '/blog', '/contact' ];
 		    var current = links[0];
 
 			$(function(){
-				var iframe = document.getElementById("content");
-				iframe.src = "/resources/pages/index.html";
+				//var iframe = document.getElementById("content");
+				//iframe.src = "/pages/index.html";
 
 		    	var button_width = 200;
 		    	for (var i = 0; i < buttons.length; i++) {
@@ -22,16 +22,16 @@
 		    		document.getElementById("navigation").innerHTML += "<a name=\"" + buttons[i] + "\" style=\"width: " + button_width + "px; right: calc(50% + " + (buttons.length/2 - i - 1)*button_width + "px);\" class=\"navigation-button" + inner_button + "\" href=\"" + links[i] + "\">" + buttons[i] + "</a>";
 		    	}
 
-		    	$("#navigation a").click(function(e) {
+		    	/*$("#navigation a").click(function(e) {
 					console.log("clicked");
 					e.preventDefault();
 					var src = $(this).attr('href');
 					$('#content').attr('src', src);
-					/*$('#content').fadeOut(50,function(){
+					$('#content').fadeOut(50,function(){
 						$('#content').attr('src', src);
 						$('#content').fadeIn(100);
-					});*/
-				});
+					});
+				});*/
 
 		    	var fade = document.getElementsByClassName("fade");
 		    	for (var i = 0; i < fade.length; i++) {
@@ -58,7 +58,6 @@
 		</div>
 
 		<div id="navigation"></div>
-
-		<iframe id="content" src="/resources/pages/index.html"></iframe>
+		<!--<iframe id="content" src="/page/index"></iframe>-->
 	</body>
 </html>
