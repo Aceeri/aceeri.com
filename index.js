@@ -28,6 +28,10 @@ console.log("Port: " + port);
 console.log("Template: " + (template != undefined));
 
 function get_page(url) {
+	if (url == "/" || url == "") {
+		url = "/index.html";
+	}
+
 	var content;
 	try {
 		content = fs.readFileSync(__dirname + "/pages/templated/" + url);
@@ -60,12 +64,8 @@ function get_subdomain(url) {
 	return match == undefined ? "" : match[1].slice(0, match[1].length - 1);
 }
 
-function not_found(req, res) {
-
-}
-
 app.use(vhost(host, function(req, res) {
-	if (subdomain(req.headers.host) == "") {
+	if (get_subdomain(req.headers.host) == "") {
 		console.log("redirect to www.host: " + req.protocol + '://www.' + host + ":" + port + req.originalUrl);
 		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
 	}
@@ -78,18 +78,16 @@ app.get('/*', function(req, res) {
 
 	var subdomain = get_subdomain(req.headers.host);
 	if (subdomain === "www") {
-		console.log("template domain");
 
 		templated_page(req, res);
 	} else if (subdomain === "chat") {
 		console.log("chat domain");
 
 		// 404 until created
-		not_found(req, res);
 	}
 
 	// no subdomains found
-	not_found(req, res);
+	//templated_page(req, res);
 });
 
 app.listen(port);
