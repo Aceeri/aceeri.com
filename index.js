@@ -66,7 +66,6 @@ function get_subdomain(url) {
 	}
 	var pattern = new RegExp(pattern_string);
 	var match = url.match(pattern);
-	console.log("url match: " + match + ", " + pattern);
 
 	return match == undefined ? "" : match[1].slice(0, match[1].length - 1);
 }
@@ -77,16 +76,16 @@ app.get('/*', function(req, res) {
 	console.log("request: " + req.headers.host + req.originalUrl);
 
 	var subdomain = get_subdomain(req.headers.host);
-	//console.log("subdomain: " + subdomain);
-	if (subdomain === "www") {
+
+	if (req.originalUrl == "/robots.txt") {
+		res.sendFile(__dirname + "/robots.txt");
+
+	} else if (subdomain === "www") {
 		templated_page(req, res);
 
 	} else if (subdomain === "chat") {
-		//console.log("chat domain");
 
-		// 404 until created
 	} else {
-		console.log("subdomain not found: " + subdomain);
 		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
 	}
 });
