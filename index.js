@@ -64,13 +64,6 @@ function get_subdomain(url) {
 	return match == undefined ? "" : match[1].slice(0, match[1].length - 1);
 }
 
-app.use(vhost(host, function(req, res) {
-	if (get_subdomain(req.headers.host) == "") {
-		console.log("redirect to www.host: " + req.protocol + '://www.' + host + ":" + port + req.originalUrl);
-		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
-	}
-}));
-
 app.use('/r/', serve_static(__dirname + "/resources/"));
 app.use('/m/', serve_static(__dirname + "/pages/misc/"));
 app.get('/*', function(req, res) {
@@ -78,9 +71,12 @@ app.get('/*', function(req, res) {
 
 	var subdomain = get_subdomain(req.headers.host);
 	console.log("subdomain: " + subdomain);
-	if (subdomain === "www") {
-
+	if (subdomain === "") {
+		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
+		
+	} else if (subdomain === "www") {
 		templated_page(req, res);
+
 	} else if (subdomain === "chat") {
 		console.log("chat domain");
 
