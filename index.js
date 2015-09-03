@@ -58,8 +58,15 @@ function templated_page(req, res) {
 
 // returns subdomain
 function get_subdomain(url) {
-	var pattern = new RegExp('(.*.?)' + host);
+	var pattern_string;
+	if (host == 'localhost') {
+		pattern_string = /(.*.?)localhost/;
+	} else {
+		pattern_string = /(.*.?)aceeri.com/;
+	}
+	var pattern = new RegExp(pattern_string);
 	var match = url.match(pattern);
+	console.log("url match: " + match + ", " + pattern);
 
 	return match == undefined ? "" : match[1].slice(0, match[1].length - 1);
 }
