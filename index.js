@@ -77,6 +77,7 @@ app.get('/*', function(req, res) {
 	console.log("request: " + req.headers.host + req.originalUrl);
 
 	var subdomain = get_subdomain(req.headers.host);
+	console.log("subdomain: " + subdomain);
 	if (subdomain === "www") {
 
 		templated_page(req, res);
