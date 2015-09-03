@@ -79,6 +79,7 @@ app.get('/*', function(req, res) {
 
 		// 404 until created
 	} else {
+		console.log("subdomain not found: " + subdomain);
 		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
 	}
 });
