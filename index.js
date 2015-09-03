@@ -70,21 +70,17 @@ app.get('/*', function(req, res) {
 	console.log("request: " + req.headers.host + req.originalUrl);
 
 	var subdomain = get_subdomain(req.headers.host);
-	console.log("subdomain: " + subdomain);
-	if (subdomain === "") {
-		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
-		
-	} else if (subdomain === "www") {
+	//console.log("subdomain: " + subdomain);
+	if (subdomain === "www") {
 		templated_page(req, res);
 
 	} else if (subdomain === "chat") {
-		console.log("chat domain");
+		//console.log("chat domain");
 
 		// 404 until created
+	} else {
+		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
 	}
-
-	// no subdomains found
-	//templated_page(req, res);
 });
 
 app.listen(port);
