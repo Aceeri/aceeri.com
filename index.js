@@ -30,7 +30,7 @@ console.log("Template: " + (template != undefined));
 
 function get_page(url) {
 	if (url == "/" || url == "") {
-		url = "/index.html";
+		res.redirect(301, req.protocol + '://www.' + host + ":" + port + "/index");
 	}
 
 	var content;
@@ -81,7 +81,7 @@ function get_subdomain(url) {
 app.use('/r/', serve_static(__dirname + "/resources/"));
 app.use('/', serve_static(__dirname + "/pages/misc/", { 'extensions': [ 'html', 'htm' ]}));
 app.get('/*', function(req, res) {
-	console.log("request: " + req.headers.host + req.originalUrl);
+	//console.log("request: " + req.headers.host + req.originalUrl);
 
 	var subdomain = get_subdomain(req.headers.host);
 
