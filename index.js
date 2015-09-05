@@ -49,11 +49,6 @@ function get_page(url) {
 
 function templated_page(req, res) {
 	var page = template.toString();
-	// redirect to home page
-	if (res.originalUrl == "/" || res.originalUrl == "") {
-		res.redirect(301, req.protocol + '://www.' + host + ":" + port + "/index");
-	}
-
 	var content = get_page(req.originalUrl);
 
 	// insert content from page into template
@@ -86,15 +81,16 @@ app.get('/*', function(req, res) {
 	//console.log("request: " + req.headers.host + req.originalUrl);
 
 	var subdomain = get_subdomain(req.headers.host);
-
 	if (req.originalUrl == "/robots.txt") {
 		res.sendFile(__dirname + "/robots.txt");
+
+	} else if (req.originalUrl == "" || req.originalUrl == "/") {
+		res.redirect(301, req.protocol + '://www.' + host + ":" + port + "/index");
 
 	} else if (subdomain === "www") {
 		templated_page(req, res);
 
 	} else if (subdomain === "chat") {
-
 
 	} else {
 		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
