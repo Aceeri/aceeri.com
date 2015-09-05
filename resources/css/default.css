@@ -1,5 +1,6 @@
 * {
 	font-family: 'Roboto', sans-serif;
+	color: #808080;
 	margin: 0px;
 }
 
@@ -8,18 +9,34 @@ iframe {
 }
 
 #content {
+	background: inherit;
+	position: relative;
+	max-width: 1000px;
+	min-width: 500px;
+	min-height: 100%;
+	margin: 0 auto;
+	-moz-transition: width 1s ease;
+	-webkit-transition: width 1s ease;
+	transition: width 1s ease;
+}
+
+.frame {
+	margin: 15px;
+	width: 100%;
+}
+
+.column {
 	background: #FFFFFF;
-	width: calc(100% - 20px);
-	height: 100%;
-	margin: 10px;
+	margin-left: .5rem;
+	margin-right: .5rem;
 }
 
 .topbar {
 	z-index: -1;
-	background-image: url("../img/topbar2.png");
+	/*background-image: url("../img/topbar2.png");*/
 	background-repeat: no-repeat;
 	background-size: 100% 100px;
-	/*background: #FFBC59;*/
+	background: #F89406;
 	width: 100%;
 	height: 100px;
 }
@@ -44,14 +61,13 @@ iframe {
 	border-top: 0px;
 	border-bottom-width: 1px;
 	border-style: solid;
-	border-color: #FFBC59;
+	border-color: #F89406;
 }
 
 .navigation-button {
 	display: block;
 	position: absolute;
 	text-align: center;
-	color: #000000;
 	font-size: 18px;
 	height: inherit;
 	line-height: 35px;
@@ -71,13 +87,13 @@ iframe {
 	border-bottom: 0px;
 	border-style: solid;
 	border-bottom-width:1px;
-	border-color: #FFBC59;
+	border-color: #F89406;
 }
 
 .fade { }
 
 body {
-	background: #FFFFFF;
+	background: #F1F1F1;
 }
 
 @keyframes navigation-hover {

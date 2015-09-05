@@ -22,25 +22,11 @@
 		    var current = links[0];
 
 			$(function(){
-				//var iframe = document.getElementById("content");
-				//iframe.src = "/pages/index.html";
-
 		    	var button_width = 200;
 		    	for (var i = 0; i < buttons.length; i++) {
 		    		var inner_button = (i > 0) ? " navigation-inner-button" : "";
 		    		document.getElementById("navigation").innerHTML += "<a name=\"" + buttons[i] + "\" style=\"width: " + button_width + "px; right: calc(50% + " + (buttons.length/2 - i - 1)*button_width + "px);\" class=\"navigation-button" + inner_button + "\" href=\"" + links[i] + "\">" + buttons[i] + "</a>";
 		    	}
-
-		    	/*$("#navigation a").click(function(e) {
-					console.log("clicked");
-					e.preventDefault();
-					var src = $(this).attr('href');
-					$('#content').attr('src', src);
-					$('#content').fadeOut(50,function(){
-						$('#content').attr('src', src);
-						$('#content').fadeIn(100);
-					});
-				});*/
 
 		    	var fade = document.getElementsByClassName("fade");
 		    	for (var i = 0; i < fade.length; i++) {
@@ -69,6 +55,5 @@
 		<div id="navigation"></div>
 
 		<div id="content"></div>
-		<!--<iframe id="content" src="/page/index"></iframe>-->
 	</body>
 </html>

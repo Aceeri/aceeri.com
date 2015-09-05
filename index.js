@@ -6,6 +6,7 @@ var https = require('https');
 var http = require('http');
 var vhost = require('vhost');
 var fs = require('fs');
+//var Iconv = require('iconv').Iconv;
 var app = express();
 
 var output = true;
@@ -36,9 +37,11 @@ function get_page(url) {
 	try {
 		content = fs.readFileSync(__dirname + "/pages/templated/" + url);
 	} catch (err) {
-		console.log("404");
 		content = fs.readFileSync(__dirname + "/pages/404.html");
 	}
+
+    //iconv = new Iconv("UTF-16", "UTF-8");
+    //content = iconv.convert(content).toString("utf8");
 
 	return content;
 }
@@ -84,6 +87,7 @@ app.get('/*', function(req, res) {
 		templated_page(req, res);
 
 	} else if (subdomain === "chat") {
+
 
 	} else {
 		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
