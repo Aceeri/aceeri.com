@@ -29,10 +29,6 @@ console.log("Port: " + port);
 console.log("Template: " + (template != undefined));
 
 function get_page(url) {
-	if (url == "/" || url == "") {
-		res.redirect(301, req.protocol + '://www.' + host + ":" + port + "/index");
-	}
-
 	var content;
 	try {
 		var ext_pattern = new RegExp(".*(.html)");
@@ -53,8 +49,14 @@ function get_page(url) {
 
 function templated_page(req, res) {
 	var page = template.toString();
+	// redirect to home page
+	if (res.originalUrl == "/" || res.originalUrl == "") {
+		res.redirect(301, req.protocol + '://www.' + host + ":" + port + "/index");
+	}
+
 	var content = get_page(req.originalUrl);
 
+	// insert content from page into template
 	page = page.replace(new RegExp(/<div id="content">/), "<div id=\"content\">" + content);
 
 	res.writeHead(200, {
