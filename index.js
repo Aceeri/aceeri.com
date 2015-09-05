@@ -35,6 +35,11 @@ function get_page(url) {
 
 	var content;
 	try {
+		var ext_pattern = new RegExp(".*(.html)");
+		if (url.match(ext_pattern) == undefined) {
+			url += ".html";
+		}
+
 		content = fs.readFileSync(__dirname + "/pages/templated/" + url);
 	} catch (err) {
 		content = fs.readFileSync(__dirname + "/pages/404.html");
