@@ -74,7 +74,7 @@ function get_subdomain(url) {
 }
 
 app.use('/r/', serve_static(__dirname + "/resources/"));
-app.use('/m/', serve_static(__dirname + "/pages/misc/"));
+app.use('/', serve_static(__dirname + "/pages/misc/", { 'extensions': [ 'html', 'htm' ]}));
 app.get('/*', function(req, res) {
 	console.log("request: " + req.headers.host + req.originalUrl);
 
