@@ -79,13 +79,30 @@ function get_subdomain(url) {
 	return match == undefined ? "" : match[1].slice(0, match[1].length - 1);
 }
 
+function redirect_www(res, req) {
+	res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
+}
+
+var serve_page = serve_static(__dirname + "/pages/misc/", { 'extensions': [ 'html', 'htm' ]});
+
+// serves resources (img, css, js)
 app.use('/r/', serve_static(__dirname + "/resources/"));
-app.use('/', serve_static(__dirname + "/pages/misc/", { 'extensions': [ 'html', 'htm' ]}));
+
+// serve static pages, redirects to www if missing
+app.use('/', function(req, res) {
+	var subdomain = get_subdomain(req.headers.host);
+	if (subdomain == "") {
+		redirect_www(res, req);
+	}
+	serve_page(req, res);
+});
+
+// routes subdomains to proper
 app.get('/*', function(req, res) {
 	//console.log("request: " + req.headers.host + req.originalUrl);
 
 	var subdomain = get_subdomain(req.headers.host);
-	if (req.originalUrl == "/robots.txt") {
+	if (req.originalUrl === "/robots.txt") {
 		res.sendFile(__dirname + "/robots.txt");
 
 	} else if (req.originalUrl == "" || req.originalUrl == "/") {
@@ -97,7 +114,7 @@ app.get('/*', function(req, res) {
 	} else if (subdomain === "chat") {
 
 	} else {
-		res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
+		redirect_www(res, req);
 	}
 });
 
