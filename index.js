@@ -4,12 +4,11 @@ var serve_static = require('serve-static');
 var https = require('https');
 var http = require('http');
 var vhost = require('vhost');
+var util = require('utility');
 var fs = require('fs');
 var app = express();
 
 var output = true;
-var host = fs.readFileSync("../host.txt");
-var port = (host == "localhost") ? 8000 : 80;
 
 var template = fs.readFileSync(__dirname + "/pages/templated/template.html", 'utf8'); // gets template for server session (reduces load)
 
@@ -32,8 +31,8 @@ function UncaughtExceptionHandler(err) {
 }
 
 console.log("Dir: " + __dirname);
-console.log("Host: " + host);
-console.log("Port: " + port);
+console.log("Host: " + util.host);
+console.log("Port: " + util.port);
 console.log("Template: " + (template != undefined));
 
 function get_page(url) {
@@ -65,48 +64,22 @@ function templated_page(req, res) {
 	res.end();
 }
 
-// returns subdomain
-function get_subdomain(url) {
-	var pattern_string;
-	if (host == 'localhost') {
-		pattern_string = /(.*.?)localhost/;
-	} else {
-		pattern_string = /(.*.?)aceeri.com/;
-	}
-	var pattern = new RegExp(pattern_string);
-	var match = url.match(pattern);
-
-	return match == undefined ? "" : match[1].slice(0, match[1].length - 1);
-}
-
-function redirect_www(res, req) {
-	res.redirect(301, req.protocol + '://www.' + host + ":" + port + req.originalUrl);
-}
-
-var serve_page = serve_static(__dirname + "/pages/misc/", { 'extensions': [ 'html', 'htm' ]});
-
 // serves resources (img, css, js)
 app.use('/r/', serve_static(__dirname + "/resources/"));
 
 // serve static pages, redirects to www if missing
-app.use('/', function(req, res) {
-	var subdomain = get_subdomain(req.headers.host);
-	if (subdomain == "") {
-		redirect_www(res, req);
-	}
-	serve_page(req, res);
-});
+app.use('/', serve_static(__dirname + "/pages/misc/", { 'extensions': [ 'html', 'htm' ]}));
 
 // routes subdomains to proper
 app.get('/*', function(req, res) {
 	//console.log("request: " + req.headers.host + req.originalUrl);
 
-	var subdomain = get_subdomain(req.headers.host);
+	var subdomain = util.subdomain(req.headers.host);
 	if (req.originalUrl === "/robots.txt") {
 		res.sendFile(__dirname + "/robots.txt");
 
 	} else if (req.originalUrl == "" || req.originalUrl == "/") {
-		res.redirect(301, req.protocol + '://www.' + host + ":" + port + "/index");
+		res.redirect(301, req.protocol + '://www.' + util.host + ":" + util.port + "/index");
 
 	} else if (subdomain === "www") {
 		templated_page(req, res);
@@ -114,8 +87,8 @@ app.get('/*', function(req, res) {
 	} else if (subdomain === "chat") {
 
 	} else {
-		redirect_www(res, req);
+		util.redirect_www(req, res);
 	}
 });
 
-app.listen(port);
+app.listen(util.port);
