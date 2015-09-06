@@ -27,6 +27,7 @@
 					});
 				});
 
+				// icon fading on mouseover
 		    	var fade = document.getElementsByClassName("fade");
 		    	for (var i = 0; i < fade.length; i++) {
 		    		var images = $(fade).find("img");
@@ -39,6 +40,11 @@
 		    	}
 		    });
 		</script>
+		<noscript>
+			<style type="text/css">
+				.imagefade { opacity: 1.0; }
+			</style>
+		</noscript>
 	</head>
 	<body>
 		<header>
@@ -56,13 +62,13 @@
 		<div id="warnings">
 			<noscript>
 				<div class="warning">
-					Please enable javascript
+					Please enable javascript for the best viewing of this site.
 				</div>
 			</noscript>
 
-			<div class="warning">
+			<!--<div style="background-color: #22A7F0;" class="warning">
 				The site is under a lot of maintenance at the moment, check back later
-			</div>
+			</div>-->
 		</div>
 
 		<div id="content"></div>
