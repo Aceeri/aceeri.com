@@ -8,12 +8,16 @@ $(function() {
 			src: data.image
 		});
 		$("#title").html(data.title);
+		$("#info").html(data.content);
 	});
 });
 </script>
 
-<div id="template" style="background-color: #FFFFFF;">
-	<img style="width: 100%; height: 300px;" id="top-image">
+<div style="width: 100%; height: 300px;" class="container">
+	<img style="width: 100%; height: 100%;" id="top-image" alt="Project Image">
+</div>
+
+<div style="padding: 10px;" class="container">
 	<h1 id="title"></h1>
-	<p>Test</p>
+	<div id="info"></div>
 </div>

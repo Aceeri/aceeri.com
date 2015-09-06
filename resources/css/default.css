@@ -4,6 +4,12 @@
 	margin: 0px;
 }
 
+.container {
+	background-color: #FFFFFF;
+	margin-top: .5rem;
+	margin-bottom: .5rem;
+}
+
 .warning { 
 	color: #FFFFFF;
 	line-height: 30px;
