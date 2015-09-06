@@ -1,3 +1,19 @@
-<div>
-asdfasdf
+
+<script>
+$(function() {
+	$.get( "/r" + document.location.pathname + ".json", function(data, status) {
+		console.log(data);
+		console.log(data.image);
+		$("#top-image").attr({
+			src: data.image
+		});
+		$("#title").html(data.title);
+	});
+});
+</script>
+
+<div id="template" style="background-color: #FFFFFF;">
+	<img style="width: 100%; height: 300px;" id="top-image">
+	<h1 id="title"></h1>
+	<p>Test</p>
 </div>

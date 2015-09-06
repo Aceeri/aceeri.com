@@ -1,7 +1,5 @@
-
 {
-	title: "Cyber Butcher";
-	image: "/r/img/noodleyappendage.jpg";
-	content: 
-	"Test";
+    "title": "Cyber Butcher",
+    "image": "/r/img/noodleyappendage.jpg",
+    "content": "Test"
 }

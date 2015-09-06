@@ -39,36 +39,37 @@ console.log("Port: " + util.port);
 console.log("Template: " + (template != undefined));
 
 function get_page(url, callback) {
-	//var content;
-	try {
-		var ext_pattern = new RegExp(".*(.html)");
-		if (url.match(ext_pattern) == undefined) {
-			url += ".html";
-		}
-
-		fs.readFile(__dirname + "/pages/templated/" + url, 'utf8', callback);
-	} catch (err) {
-		fs.readFile(__dirname + "/pages/404.html", 'utf8', callback);
+	var ext_pattern = new RegExp(".*(.html)");
+	if (url.match(ext_pattern) == undefined) {
+		url += ".html";
 	}
 
-	//return content;
+	return fs.readFile(__dirname + "/pages/templated/" + url, 'utf8', callback);
+}
+
+function insert_content(req, res, data) {
+	// insert content from page into template
+	var page = template.toString();
+	page = page.replace(new RegExp(/<div id="content">/), "<div id=\"content\">" + data);
+
+	res.writeHead(200, { 'Content-Type': 'text/html' });
+	res.write(page);
+	res.end();
 }
 
 function templated_page(req, res, path) {
-	var page = template.toString();
 	if (path == "") {
 		path = req.originalUrl;
 	}
 
-	var content = get_page(path, function(err, data) {
-		if (err) throw err;
-
-		// insert content from page into template
-		page = page.replace(new RegExp(/<div id="content">/), "<div id=\"content\">" + data);
-
-		res.writeHead(200, { 'Content-Type': 'text/html' });
-		res.write(page);
-		res.end();
+	get_page(path, function(err, data) {
+		if (err) { 
+			get_page("../404", function(err, data) {
+				insert_content(req, res, data);
+			});
+		} else {
+			insert_content(req, res, data);
+		}
 	});
 }
 
@@ -83,15 +84,13 @@ function route(url) {
 }
 
 // serves resources (img, css, js)
-app.use('/r/', serve_static(__dirname + "/resources/"));
+app.use('/r/', serve_static(__dirname + "/resources/", { 'extensions': [ 'png', 'jpg', 'json' ]}));
 
 // serve static pages, redirects to www if missing
 app.use('/', serve_static(__dirname + "/pages/misc/", { 'extensions': [ 'html', 'htm' ]}));
 
 // routes subdomains to proper
 app.get('/*', function(req, res) {
-	//console.log("request: " + req.headers.host + req.originalUrl);
-
 	var subdomain = util.subdomain(req.headers.host);
 	if (req.originalUrl === "/robots.txt") {
 		res.sendFile(__dirname + "/robots.txt");
@@ -101,8 +100,6 @@ app.get('/*', function(req, res) {
 
 	} else if (subdomain === "www") {
 		var path = route(req.originalUrl);
-		console.log("custom path: " + path);
-
 		templated_page(req, res, path);
 
 	} else if (subdomain === "chat") {
