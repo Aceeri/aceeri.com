@@ -146,5 +146,7 @@ hr {
 
 .imagefade {
 	opacity: 0.0;
+	-moz-transition: opacity .5s ease-out;
+	-webkit-transition: opacity .5s ease-out;
 	transition: opacity .5s ease-out;
 }
