@@ -1,12 +1,10 @@
 var express = require('express');
-//var connect = require('connect');
 var compression = require('compression');
 var serve_static = require('serve-static');
 var https = require('https');
 var http = require('http');
 var vhost = require('vhost');
 var fs = require('fs');
-//var Iconv = require('iconv').Iconv;
 var app = express();
 
 var output = true;
