@@ -143,3 +143,8 @@ hr {
 	border-right: 0px;
 	border-color: #DEDEDE;
 }
+
+.imagefade {
+	opacity: 0.0;
+	transition: opacity .5s ease-out;
+}

@@ -19,7 +19,14 @@
 		</script>
 		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script> 
 		<script>
-			$(function(){
+			$(function() {
+				// smooth loading of images
+				$(".imagefade").each(function() {
+					$(this).on('load', function() {
+						$(this).css({ "opacity": "1.0" });
+					});
+				});
+
 		    	var fade = document.getElementsByClassName("fade");
 		    	for (var i = 0; i < fade.length; i++) {
 		    		var images = $(fade).find("img");
