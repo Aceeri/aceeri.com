@@ -4,10 +4,6 @@
 	margin: 0px;
 }
 
-iframe {
-	border: 0px;
-}
-
 #content {
 	background: inherit;
 	position: relative;
@@ -20,15 +16,16 @@ iframe {
 	transition: width 1s ease;
 }
 
-.frame {
-	margin: 15px;
-	width: 100%;
-}
-
 .column {
 	background: #FFFFFF;
-	margin-left: .5rem;
-	margin-right: .5rem;
+	margin: 1rem;
+}
+
+.frame {
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-bottom: 1rem;
+	padding-top: .5rem;
 }
 
 .topbar {
@@ -96,4 +93,15 @@ iframe {
 
 body {
 	background: #F1F1F1;
+}
+
+hr {
+	margin-left: 2rem;
+	margin-right: 2rem;
+	border-style: solid;
+	border-width: 1px;
+	border-top: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	border-color: #DEDEDE;
 }
