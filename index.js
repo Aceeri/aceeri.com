@@ -13,7 +13,18 @@ var output = true;
 var host = fs.readFileSync("../host.txt");
 var port = (host == "localhost") ? 8000 : 80;
 
-var template = fs.readFileSync(__dirname + "/pages/templated/template.html"); // gets template for server session (reduces load)
+var template = fs.readFileSync(__dirname + "/pages/templated/template.html", 'utf8'); // gets template for server session (reduces load)
+
+var buttons = [ "Home", "Lorem Ipsum", "Lorem Ipsum", "Lorem Ipsum" ];
+var links = [ '/index', '/portfolio', '/blog', '/contact' ];
+var button_width = 200;
+
+var button_html = '';
+for (var i = 0; i < buttons.length; i++) {
+	var inner_button = (i > 0) ? " navigation-inner-button" : "";
+	button_html += "<a name=\"" + buttons[i] + "\" style=\"width: " + button_width + "px; right: calc(50% + " + (buttons.length/2 - i - 1)*button_width + "px);\" class=\"navigation-button" + inner_button + "\" href=\"" + links[i] + "\">" + buttons[i] + "</a>";
+}
+template = template.replace(new RegExp(/<div id="navigation">/), "<div id=\"navigation\">" + button_html);
 
 process.on('uncaughtException', UncaughtExceptionHandler);
 
@@ -38,7 +49,7 @@ function get_page(url) {
 
 		content = fs.readFileSync(__dirname + "/pages/templated/" + url, 'utf8');
 	} catch (err) {
-		content = fs.readFileSync(__dirname + "/pages/404.html");
+		content = fs.readFileSync(__dirname + "/pages/404.html", 'utf8');
 	}
 
 	return content;
