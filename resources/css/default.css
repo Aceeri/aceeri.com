@@ -107,8 +107,6 @@ header {
 	color: #F89406;
 }
 
-#navigation a:
-
 #navigation a:nth-child(n + 2) {
 	border-left: 1px;
 	border-right: 0px;
