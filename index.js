@@ -36,7 +36,8 @@ function get_page(url) {
 			url += ".html";
 		}
 
-		content = fs.readFileSync(__dirname + "/pages/templated/" + url);
+		content = fs.readFileSync(__dirname + "/pages/templated/" + url, 'utf8');
+		console.log(content);
 	} catch (err) {
 		content = fs.readFileSync(__dirname + "/pages/404.html");
 	}
@@ -55,7 +56,6 @@ function templated_page(req, res) {
 	page = page.replace(new RegExp(/<div id="content">/), "<div id=\"content\">" + content);
 
 	res.writeHead(200, {
-		'Content-Length': page.length,
 		'Content-Type': 'text/html' });
 	res.write(page);
 	res.end();
