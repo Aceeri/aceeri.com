@@ -37,13 +37,9 @@ function get_page(url) {
 		}
 
 		content = fs.readFileSync(__dirname + "/pages/templated/" + url, 'utf8');
-		console.log(content);
 	} catch (err) {
 		content = fs.readFileSync(__dirname + "/pages/404.html");
 	}
-
-    //iconv = new Iconv("UTF-16", "UTF-8");
-    //content = iconv.convert(content).toString("utf8");
 
 	return content;
 }
