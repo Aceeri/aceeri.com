@@ -62,7 +62,7 @@ header {
 	border-color: #F89406;
 }
 
-.navigation-button {
+#navigation a {
 	display: block;
 	position: absolute;
 	text-align: center;
@@ -75,8 +75,18 @@ header {
 	transition: color .2s ease;
 }
 
-.navigation-button:hover {
+#navigation a:hover {
 	color: #F89406;
+}
+
+#navigation a:nth-child(n + 2) {
+	border-left: 1px;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+	border-style: solid;
+	border-bottom-width:1px;
+	border-color: #F89406;
 }
 
 .navigation-inner-button {
