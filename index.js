@@ -5,8 +5,19 @@ var https = require('https');
 var http = require('http');
 var vhost = require('vhost');
 var util = require('utility');
+//var temp = require('template');
 var fs = require('fs');
 var app = express();
+
+process.on('uncaughtException', UncaughtExceptionHandler);
+
+function UncaughtExceptionHandler(err)
+{
+    console.log("Uncaught Exception Encountered!!");
+    console.log("err: ", err);
+    console.log("Stack trace: ", err.stack);
+    setInterval(function(){}, 1000);
+}
 
 var output = true;
 
@@ -22,46 +33,53 @@ for (var i = 0; i < buttons.length; i++) {
 }
 template = template.replace(new RegExp(/<div id="navigation">/), "<div id=\"navigation\">" + button_html);
 
-process.on('uncaughtException', UncaughtExceptionHandler);
-
-function UncaughtExceptionHandler(err) {
-    console.log("err: ", err);
-    console.log("Stack trace: ", err.stack);
-    setInterval(function() { }, 1000);
-}
-
 console.log("Dir: " + __dirname);
 console.log("Host: " + util.host);
 console.log("Port: " + util.port);
 console.log("Template: " + (template != undefined));
 
-function get_page(url) {
-	var content;
+function get_page(url, callback) {
+	//var content;
 	try {
 		var ext_pattern = new RegExp(".*(.html)");
 		if (url.match(ext_pattern) == undefined) {
 			url += ".html";
 		}
 
-		content = fs.readFileSync(__dirname + "/pages/templated/" + url, 'utf8');
+		fs.readFile(__dirname + "/pages/templated/" + url, 'utf8', callback);
 	} catch (err) {
-		content = fs.readFileSync(__dirname + "/pages/404.html", 'utf8');
+		fs.readFile(__dirname + "/pages/404.html", 'utf8', callback);
 	}
 
-	return content;
+	//return content;
 }
 
-function templated_page(req, res) {
+function templated_page(req, res, path) {
 	var page = template.toString();
-	var content = get_page(req.originalUrl);
+	if (path == "") {
+		path = req.originalUrl;
+	}
 
-	// insert content from page into template
-	page = page.replace(new RegExp(/<div id="content">/), "<div id=\"content\">" + content);
+	var content = get_page(path, function(err, data) {
+		if (err) throw err;
 
-	res.writeHead(200, {
-		'Content-Type': 'text/html' });
-	res.write(page);
-	res.end();
+		// insert content from page into template
+		page = page.replace(new RegExp(/<div id="content">/), "<div id=\"content\">" + data);
+
+		res.writeHead(200, { 'Content-Type': 'text/html' });
+		res.write(page);
+		res.end();
+	});
+}
+
+function route(url) {
+	var project = url.match(new RegExp(/\/projects\/(.*)/));
+
+	if (project != undefined) {
+		return "/project.html"
+	}
+
+	return "";
 }
 
 // serves resources (img, css, js)
@@ -82,7 +100,10 @@ app.get('/*', function(req, res) {
 		res.redirect(301, req.protocol + '://www.' + util.host + ":" + util.port + "/index");
 
 	} else if (subdomain === "www") {
-		templated_page(req, res);
+		var path = route(req.originalUrl);
+		console.log("custom path: " + path);
+
+		templated_page(req, res, path);
 
 	} else if (subdomain === "chat") {
 
