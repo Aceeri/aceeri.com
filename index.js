@@ -74,17 +74,23 @@ function templated_page(req, res, path) {
 }
 
 function route(url) {
-	var project = url.match(new RegExp(/\/projects\/(.*)/));
+	var project = url.match(new RegExp(/\/project\/(.*)/));
+	var blog = url.match(new RegExp(/\/post\/(.*)/));
 
-	if (project != undefined) {
-		return "/project.html"
+	if (project != null && project[1] != null) {
+		return "project.html";
+	}
+
+	var blog = url.match(new RegExp(/\/post\/(.*)/));
+	if (blog != null && blog[1] != null) {
+		return "blog.html";
 	}
 
 	return "";
 }
 
 // serves resources (img, css, js)
-app.use('/r/', serve_static(__dirname + "/resources/", { 'extensions': [ 'png', 'jpg', 'json' ]}));
+app.use('/r/', serve_static(__dirname + "/resources/", { 'fallthrough': 'false', 'extensions': [ 'png', 'jpg', 'json' ]}));
 
 // serve static pages, redirects to www if missing
 app.use('/', serve_static(__dirname + "/pages/misc/", { 'extensions': [ 'html', 'htm' ]}));
