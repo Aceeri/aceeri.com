@@ -5,9 +5,14 @@
 }
 
 .container {
+	padding: 10px;
 	background-color: #FFFFFF;
 	margin-top: .5rem;
 	margin-bottom: .5rem;
+}
+
+.title {
+
 }
 
 .warning { 
@@ -96,11 +101,13 @@ header {
 	text-align: center;
 	font-size: 18px;
 	height: inherit;
+	font-weight: normal;
+	color: #808080;
 	line-height: 35px;
 	text-decoration: none;
-	-moz-transition: color .2s ease;
-	-webkit-transition: color .2s ease;
-	transition: color .2s ease;
+	-moz-transition: color .3s ease;
+	-webkit-transition: color .3s ease;
+	transition: color .3s ease;
 }
 
 #navigation a:hover {
@@ -142,6 +149,19 @@ hr {
 	border-left: 0px;
 	border-right: 0px;
 	border-color: #DEDEDE;
+}
+
+a {
+	text-decoration: none;
+	color: #F89406;
+	font-weight: 600;
+	-moz-transition: color .3s ease;
+	-webkit-transition: color .3s ease;
+	transition: color .3s ease;
+}
+
+a:hover {
+	color: #F4BB70;
 }
 
 .imagefade {

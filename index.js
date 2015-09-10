@@ -23,8 +23,8 @@ var output = true;
 
 var template = fs.readFileSync(__dirname + "/pages/templated/template.html", 'utf8'); // gets template for server session (reduces load)
 
-var buttons = [ "Home", "Portfolio", "Blog" ];
-var links = [ '/index', '/portfolio', '/blog', '/contact' ];
+var buttons = [ "Home", "Portfolio", "Blog", "Misc" ];
+var links = [ '/index', '/portfolio', '/blog', "/misc" ];
 var button_width = 200;
 
 var button_html = '';
