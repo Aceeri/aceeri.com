@@ -25,7 +25,7 @@ var template = fs.readFileSync(__dirname + "/pages/templated/template.html", 'ut
 
 var buttons = [ "Home", "Portfolio", "Blog", "Misc" ];
 var links = [ '/index', '/portfolio', '/blog', "/misc" ];
-var button_width = 200;
+var button_width = 150;
 
 var button_html = '';
 for (var i = 0; i < buttons.length; i++) {
