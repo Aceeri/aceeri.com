@@ -11,10 +11,6 @@
 	margin-bottom: .5rem;
 }
 
-.title {
-
-}
-
 .warning { 
 	color: #FFFFFF;
 	line-height: 30px;
@@ -162,6 +158,14 @@ a {
 
 a:hover {
 	color: #F4BB70;
+}
+
+h1 {
+	color: #858585;
+}
+
+h2 {
+	color: #858585;
 }
 
 .imagefade {
